@@ -10,7 +10,7 @@
 
 Se debe tener instalado:
 
-1. **Java y Graddle:** Java debe estar instalado en una versión 17 o mayor.
+1. **Java y Gradle:** Java debe estar instalado en una versión 17 o mayor. Gradle permite la automatización de compilación de código abierto
 2. **Spring Boot:** Framework de código abierto que sirve para crear aplicaciones autónomas de producción que se ejecutan en una máquina virtual Java.
 3. **Docker:** para construir imágenes de contenedor.
 4. **Minikube:** para crear clústers y realizar pruebas locales.
@@ -39,6 +39,21 @@ COPY ${JAR_FILE} app.jar
 ENTRYPOINT ["java","-jar","/app.jar"]
 EXPOSE 8080
 ```
+
+Qué indica cada línea:
+
+*FROM openjdk:17-jdk-alpine*: define la imagen base para el contenedor. Usa la imagen de openjdk en su versión Alpine, optimizada para contenedores.
+
+*VOLUME /tmp*: crea el volumen dentro del contenedor. Esto conlleva mejoras en el rendimiento.
+
+*ARG JAR_FILE=build/libs/.jar*: ARG se usa durante el proceso de construcción. Indica la ubicación del JAR de la aplicación, generado con Gradle.
+
+*COPY ${JAR_FILE} app.jar*: copia el archivo JAR generado desde la máquina host al contenedor.
+
+*ENTRYPOINT ["java","-jar","/app.jar"]*: define el comando de incicio del contenedor.
+
+*EXPOSE 8080*: indica que la aplicación dentro del contenedor se escucha en el puerto 8080.
+
 
 ### 4 - Construir y subir la imagen a Docker
 A través del dockerfile, se sube la imagen a Docker.
