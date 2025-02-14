@@ -107,6 +107,29 @@ spec:
             - containerPort: 8080
 ```
 
+**Comandos más relevantes:**
+
+*apiVersion: apps/v1* : indica la versión de la API de Kubernetes que se está utilizando.
+
+*kind: Deployment*:  define que el recurso es un Deployment.
+
+*metadata.name: springboot-app*: asigna un nombre único. 
+
+*labels.app: springboot-app*: etiqueta el recurso para facilitar su identificación.
+
+*replicas: 2*: indican que se ejecutarán 2 réplicas
+
+*selector.matchLabels.app: springboot-app*: para gestionar los pods que tenga la etiqueta app: springboot-app.
+
+*metadata.labels.app: springboot-app*: se asegura de que los Pods generados tengan la misma etiqueta del selector.
+
+*containers*: define los contenedores dentro del Pod.
+
+*image: usuario/nombre*: la imagen se usará para crear el contenedor.
+
+*ports.containerPort: 8080*: expone el puerto 8080 dentro del contenedor.
+
+
 #### 5.2 - Crear un Service:
 Para almacenar configuraciones externas a la aplicación. Puede establecer cambios en la configuración sin tener que modificar el archivo .dockerfile.
 
@@ -124,6 +147,22 @@ spec:
       targetPort: 8080
   type: LoadBalancer
 ```
+
+**Comandos más importantes:*
+
+*kind: Service*: especifica que el recurso es un Service.
+
+*name: springboot-service*: asigna un nombre al servicio para referenciarlo dentro del clúster.
+
+*selector.app: springboot-app*: envía tráfico a los Pods que tengan la etiqueta pasada por parámetro.
+
+*protocol: TCP*: usa el protocolo TCP para las conexiones.
+
+*port: 80*: especifica el puerto por el que el Service recibe tráfico.
+
+*targetPort: 8080*: especifica el puerto dentro de los Pods.
+
+*type: LoadBalancer*: expone el servicio a Internet a través de una IP externa, balanceando la carga entr los Pods.
 
 #### 5. 3 - Crear un mysql-deployment y mysql-service:
 Para definir la base de datos.
@@ -161,6 +200,26 @@ ports:
 containerPort: 3306
 ```
 
+**Comandos más importantes:**
+
+*name: mysql*: asigna el nombre mysql al deployment
+
+*selector.matchLabels.app: mysql*: se usa para identificar los Pods administrados por el deployment.
+
+*labels.app: mysql*: etiqueta los Pods para que coincidan con el selector definido.
+
+*name: mysql*: nombre del contenedor.
+
+*image: mysql:8.0*: usa la imagen oficial de MySQL versión 8.0 desde Docker Hub.
+
+*env*: contiene las variables de entorno:
+  *MYSQL_ROOT_PASSWORD*: establece la contraseña del usuario *root*.
+  *MYSQL_DATABASE*: crea automáticamente una base de datos.
+  *MYSQL_USER*: especifica el usuario principal.
+  *MYSQL_PASSWORD*: se deja vacío, lo cual podría ser un problema de seguridad en producción.
+
+*containerPort: 3306*: expone el puerto 3306, que es el predeterminado de MYSQL.
+
 **mysql-services:**
 ```
 apiVersion: v1
@@ -176,6 +235,11 @@ protocol: TCP
     port: 3306
     targetPort: 3306
 ```
+
+**Comandos más importantes:**
+*protocol: TCP*: usa el protocolo TCP para bases de datos.
+*port: 3306: especifica el puerto del Service.
+*targetPort: 3306*: especifica el puerto dentro de los Pods.
 
 ---
 
