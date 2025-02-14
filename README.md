@@ -34,6 +34,8 @@ Existen dos entidades, **Pelicula** y **Sesion**, con una relación **Many To On
 
 En ambas entidades, se implementan todas las operaciones de CRUD.
 
+Por último, es muy importante comentar un cambio en **applications.properties** necesario para poder ejecutar correctamente el proyecto. 
+Hay que sustituir la línea de spring.datasource.url y, donde pone *localhost*, hay que cambiarlo por *mysql-service*. 
 
 ### 3- Crear un dockerfile
 Así que, ahora hay que realizar un archivo **dockerfile** para establecer un conjunto de comandos o instrucciones. Estos comandos/instrucciones se ejecutan sucesivamente para realizar acciones sobre la imagen base para crear una nueva imagen Docker.
