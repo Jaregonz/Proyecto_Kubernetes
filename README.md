@@ -3,6 +3,13 @@
 ## Alfonso Jesús Anillo Romero
 ## Jacinto Reguera González
 
+<img src="img/portada.webp" alt="portada">
+
+## Despliegue de Aplicaciones Web
+
+## 2º DAW
+
+---
 
 ## INSTRUCCIONES
 
@@ -15,6 +22,8 @@ Se debe tener instalado:
 3. **Docker:** para construir imágenes de contenedor.
 4. **Minikube:** para crear clústers y realizar pruebas locales.
 5. **Kubectl:** herramienta de líneas de comando para interactuar con kubernetes.
+
+---
 
 ### 2- Proyecto Spring Boot
 El proyecto seleccionado ya se realizó con anterioridad, y es el denominado **"APIRestPelículas"**. 
@@ -54,6 +63,7 @@ Qué indica cada línea:
 
 *EXPOSE 8080*: indica que la aplicación dentro del contenedor se escucha en el puerto 8080.
 
+---
 
 ### 4 - Construir y subir la imagen a Docker
 A través del dockerfile, se sube la imagen a Docker.
@@ -62,6 +72,8 @@ A través del dockerfile, se sube la imagen a Docker.
 docker build -t usuario/nombreImagen .
 docker run -p 8000:8080 usuario/nombreImagen
 ```
+
+---
 
 ### 5- Definir los manifiestos de Kubernetes:
 A través de archivos **yaml**, que son los archivos o conjunto de archivos que describen el estado deseado de los recursos en el clúster de Kubernetes.
@@ -163,6 +175,7 @@ protocol: TCP
     targetPort: 3306
 ```
 
+---
 
 ### 6 - Desplegar en Kubernetes:
 
@@ -174,11 +187,17 @@ Iniciar Minikube:
 Aplicar los manifiestos, los cuales están en una carpeta denominada **deployment**
   *kubectl apply -f deployment/*
 
+<img src="img/image.png" alt="imagen deployment">
+
 Verificar los pods y servicios:
   *kubectl get pods*
   *kubectl get services*
 
+<img src="img/image2.png" alt="imagen deployment">
+
 Si todo está bien, obtendrás la IP del servicio y podrás acceder a la aplicación en el navegador.
+
+---
 
 ### 7 - Escalar y monitorizar la aplicación:
 
@@ -189,6 +208,16 @@ Escalar:
 
 Monitorear logs:
   *kubectl logs -f deployment/springboot-app*
+<img src="img/image3.png" alt="imagen deployment">
+
+Proyecto ejecutando:
+<img src="img/image4.png" alt="imagen deployment">
+
+Conexión a la base de datos desde kubernetes:
+<img src="img/image6.png" alt="imagen deployment">
+
+Entidades localizadas en la base de datos del proyecto:
+<img src="img/image7.png" alt="imagen deployment">
 
 Ver detalles del servicio:
   *kubectl describe service springboot-service*
