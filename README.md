@@ -11,9 +11,21 @@
 
 ---
 
-## INSTRUCCIONES
+## ÍNDICE
+- [1 - Requisitos previos](#1--requisitos-previos)
+- [2 - Proyecto Spring Boot](#2--proyecto-spring-boot)
+- [3 - Crear un dockerfile](#3--crear-un-dockerfile)
+- [4 - Construir y subir la imagen a docker](#4---construir-y-subir-la-imagen-a-docker)
+- [5 - Definir los manifiestos de Kubernetes](#5--definir-los-manifiestos-de-kubernetes)
+  - [5.1 - Crear un deployment](#51---crear-un-deployment)
+  - [5.2 - Crear un service](#52---crear-un-service)
+  - [5.3 - Crear un mysql-deployment y mysql-service](#5-3---crear-un-mysql-deployment-y-mysql-service)
+- [6 - Desplegar en Kubernetes](#6---desplegar-en-kubernetes)
+- [7 - Escalar y monitorizar la aplicación](#7---escalar-y-monitorizar-la-aplicación)
+---
 
-### 1- Requisitos previos
+
+## 1- Requisitos previos
 
 Se debe tener instalado:
 
@@ -25,7 +37,7 @@ Se debe tener instalado:
 
 ---
 
-### 2- Proyecto Spring Boot
+## 2- Proyecto Spring Boot
 El proyecto seleccionado ya se realizó con anterioridad, y es el denominado **"APIRestPelículas"**. 
 
 Existen dos entidades, **Pelicula** y **Sesion**, con una relación **Many To One**, donde una película puede tener muchas películas, pero una sesión corresponde a una sóla película.
@@ -37,7 +49,7 @@ En ambas entidades, se implementan todas las operaciones de CRUD.
 Por último, es muy importante comentar un cambio en **applications.properties** necesario para poder ejecutar correctamente el proyecto. 
 Hay que sustituir la línea de spring.datasource.url y, donde pone *localhost*, hay que cambiarlo por *mysql-service*. 
 
-### 3- Crear un dockerfile
+## 3- Crear un dockerfile
 Así que, ahora hay que realizar un archivo **dockerfile** para establecer un conjunto de comandos o instrucciones. Estos comandos/instrucciones se ejecutan sucesivamente para realizar acciones sobre la imagen base para crear una nueva imagen Docker.
 
 *Dockerfile*:
@@ -67,7 +79,7 @@ Qué indica cada línea:
 
 ---
 
-### 4 - Construir y subir la imagen a Docker
+## 4 - Construir y subir la imagen a Docker
 A través del dockerfile, se sube la imagen a Docker.
 
 ```
@@ -77,10 +89,10 @@ docker run -p 8000:8080 usuario/nombreImagen
 
 ---
 
-### 5- Definir los manifiestos de Kubernetes:
+## 5- Definir los manifiestos de Kubernetes:
 A través de archivos **yaml**, que son los archivos o conjunto de archivos que describen el estado deseado de los recursos en el clúster de Kubernetes.
 
-#### 5.1 - Crear un deployment:
+### 5.1 - Crear un deployment:
 Controlador de la plataforma. Define el clúster que se va a utilizar, el número de réplicas de la aplicación y la gestión de las actualizaciones.
 
 ```
@@ -130,7 +142,7 @@ spec:
 *ports.containerPort: 8080*: expone el puerto 8080 dentro del contenedor.
 
 
-#### 5.2 - Crear un Service:
+### 5.2 - Crear un Service:
 Para almacenar configuraciones externas a la aplicación. Puede establecer cambios en la configuración sin tener que modificar el archivo .dockerfile.
 
 ```
@@ -164,7 +176,7 @@ spec:
 
 *type: LoadBalancer*: expone el servicio a Internet a través de una IP externa, balanceando la carga entr los Pods.
 
-#### 5. 3 - Crear un mysql-deployment y mysql-service:
+### 5. 3 - Crear un mysql-deployment y mysql-service:
 Para definir la base de datos.
 
 **mysql-deployment:**
@@ -243,7 +255,7 @@ protocol: TCP
 
 ---
 
-### 6 - Desplegar en Kubernetes:
+## 6 - Desplegar en Kubernetes:
 
 **Comandos:**
 
@@ -265,7 +277,7 @@ Si todo está bien, obtendrás la IP del servicio y podrás acceder a la aplicac
 
 ---
 
-### 7 - Escalar y monitorizar la aplicación:
+## 7 - Escalar y monitorizar la aplicación:
 
 **Comandos:**
 
