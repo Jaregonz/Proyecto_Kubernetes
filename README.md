@@ -69,14 +69,99 @@ A través de archivos **yaml**, que son los archivos o conjunto de archivos que 
 #### 5.1 - Crear un deployment:
 Controlador de la plataforma. Define el clúster que se va a utilizar, el número de réplicas de la aplicación y la gestión de las actualizaciones.
 
+```
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: springboot-app
+  labels:
+    app: springboot-app
+spec:
+  replicas: 2
+  selector:
+    matchLabels:
+      app: springboot-app
+  template:
+    metadata:
+      labels:
+        app: springboot-app
+    spec:
+      containers:
+        - name: springboot-app
+          image: tu-usuario/nombre-aplicacion
+          ports:
+            - containerPort: 8080
+```
+
 #### 5.2 - Crear un Service:
 Para almacenar configuraciones externas a la aplicación. Puede establecer cambios en la configuración sin tener que modificar el archivo .dockerfile.
 
-#### 5.3 - Crear un Secret:
-Secret se encarga de almacenar información sensible, como pueden ser las credenciales de las bases de datos.
+```
+apiVersion: v1
+kind: Service
+metadata:
+  name: springboot-service
+spec:
+  selector:
+    app: springboot-app
+  ports:
+    - protocol: TCP
+      port: 80
+      targetPort: 8080
+  type: LoadBalancer
+```
 
-#### 5.4 - Crear un mysql-deployment:
+#### 5. 3 - Crear un mysql-deployment y mysql-service:
 Para definir la base de datos.
+
+**mysql-deployment:**
+```
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: mysql
+spec:
+  replicas: 1
+  selector:
+    matchLabels:
+      app: mysql
+  template:
+    metadata:
+      labels:
+        app: mysql
+    spec:
+      containers:
+      
+name: mysql
+      image: mysql:8.0
+      env:
+name: MYSQL_ROOT_PASSWORD
+      value: rootpassword
+name: MYSQL_DATABASE
+    value: cines_db
+name: MYSQL_USER
+  value: root
+name: MYSQL_PASSWORD
+value: 
+ports:
+containerPort: 3306
+```
+
+**mysql-services:**
+```
+apiVersion: v1
+kind: Service
+metadata:
+  name: mysql-service
+spec:
+  selector:
+    app: mysql
+  ports:
+    
+protocol: TCP
+    port: 3306
+    targetPort: 3306
+```
 
 
 ### 6 - Desplegar en Kubernetes:
@@ -86,8 +171,8 @@ Para definir la base de datos.
 Iniciar Minikube: 
   *minikube start*
 
-Aplicar los manifiestos:
-  *kubectl apply -f k8s/*
+Aplicar los manifiestos, los cuales están en una carpeta denominada **deployment**
+  *kubectl apply -f deployment/*
 
 Verificar los pods y servicios:
   *kubectl get pods*
