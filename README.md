@@ -300,4 +300,14 @@ Entidades localizadas en la base de datos del proyecto:
 Ver detalles del servicio:
   *kubectl describe service springboot-service*
 
+Por último, con el comando *kubectl get pods*, obtenemos el nombre del pod, el cual lo indicamos en el comando *kubectl port-forward pod/springboot-app-nombredelpod 8000:8080*.
 
+<img src="img/image8.png" alt="imagen deployment">
+
+Obtenemos una URL a través del comando *minikube service springboot-service --url*.
+
+<img src="img/image9.png" alt="imagen deployment">
+
+Y ya, con *kubect get svc*, se obtiene la **IP externa** para poder utilizarla en los endpoints.
+
+Tras el último comando, la aplicación está ya desplegada. En el video se mostrarán los endpoints del proyecto desplegado, con las operaciones de CRUD.
