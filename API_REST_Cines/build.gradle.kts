@@ -1,8 +1,9 @@
-plugins {
+ plugins {
 	java
 	war
 	id("org.springframework.boot") version "3.3.5"
 	id("io.spring.dependency-management") version "1.1.6"
+	 id ("java")
 }
 
 group = "com.es"
@@ -33,7 +34,7 @@ tasks.withType<Test> {
 }
 tasks {
 	bootJar {
-		enabled = false
+		enabled = true
 	}
 	bootWar {
 		enabled = true
